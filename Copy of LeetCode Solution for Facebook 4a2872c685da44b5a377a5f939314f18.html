@@ -1,0 +1,656 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Copy of LeetCode Solution for Facebook</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(145, 145, 142, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(187, 132, 108, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(215, 129, 58, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 148, 51, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(108, 155, 125, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(91, 151, 189, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(167, 130, 195, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(205, 116, 159, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(225, 111, 100, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(145, 145, 142, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(187, 132, 108, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(215, 129, 58, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 148, 51, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(108, 155, 125, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(91, 151, 189, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(167, 130, 195, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(205, 116, 159, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(225, 111, 100, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="4a2872c6-85da-44b5-a377-a5f939314f18" class="page sans"><header><img class="page-cover-image" src="https://about.fb.com/wp-content/uploads/2018/11/fb-hero-image-001.jpeg?w=1920" style="object-position:center 49.79%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">🎯</span></div><h1 class="page-title">Copy of LeetCode Solution for Facebook</h1></header><div class="page-body"><table class="collection-content"><thead><tr><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>Problem</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesSelect"><path d="M7,13 C10.31348,13 13,10.31371 13,7 C13,3.68629 10.31348,1 7,1 C3.68652,1 1,3.68629 1,7 C1,10.31371 3.68652,13 7,13 Z M3.75098,5.32278 C3.64893,5.19142 3.74268,5 3.90869,5 L10.09131,5 C10.25732,5 10.35107,5.19142 10.24902,5.32278 L7.15771,9.29703 C7.07764,9.39998 6.92236,9.39998 6.84229,9.29703 L3.75098,5.32278 Z"></path></svg></span>Difficulty</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesMultipleSelect"><path d="M4,3 C4,2.447715 4.447715,2 5,2 L12,2 C12.5523,2 13,2.447716 13,3 C13,3.55228 12.5523,4 12,4 L5,4 C4.447715,4 4,3.55228 4,3 Z M4,7 C4,6.447715 4.447715,6 5,6 L12,6 C12.5523,6 13,6.447716 13,7 C13,7.55228 12.5523,8 12,8 L5,8 C4.447715,8 4,7.55228 4,7 Z M4,11 C4,10.447715 4.447715,10 5,10 L12,10 C12.5523,10 13,10.447716 13,11 C13,11.55228 12.5523,12 12,12 L5,12 C4.447715,12 4,11.55228 4,11 Z M2,4 C1.44771525,4 1,3.55228475 1,3 C1,2.44771525 1.44771525,2 2,2 C2.55228475,2 3,2.44771525 3,3 C3,3.55228475 2.55228475,4 2,4 Z M2,8 C1.44771525,8 1,7.55228475 1,7 C1,6.44771525 1.44771525,6 2,6 C2.55228475,6 3,6.44771525 3,7 C3,7.55228475 2.55228475,8 2,8 Z M2,12 C1.44771525,12 1,11.5522847 1,11 C1,10.4477153 1.44771525,10 2,10 C2.55228475,10 3,10.4477153 3,11 C3,11.5522847 2.55228475,12 2,12 Z"></path></svg></span>Tag</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCreatedAt"><path d="M6.98643729,14.0000972 C5.19579566,14.0000972 3.40419152,13.3106896 2.04245843,11.9323606 C-0.681017475,9.21200555 -0.680780251,4.76029539 2.04293482,2.04012507 C4.76664406,-0.68004331 9.22427509,-0.68004331 11.9480135,2.04013479 C13.272481,3.36277455 14,5.1330091 14,6.99552762 C14,8.87640182 13.2721894,10.6285043 11.9480135,11.9509302 C10.5679344,13.3105924 8.77756503,14.0000972 6.98643729,14.0000972 Z M10.2705296,7.00913883 L10.2705296,8.46099754 L10.2705296,8.65543362 L10.076181,8.65543362 L8.6543739,8.65543362 L5.72059514,8.65543362 L5.52619796,8.65543362 L5.52619796,8.46099754 L5.52619796,5.52541044 L5.52619796,3.37946773 L5.52619796,3.18502193 L5.72059514,3.18502193 L7.17253164,3.18502193 L7.36692883,3.18502193 L7.36692883,3.37946773 L7.36692883,6.81467358 L10.076181,6.81467358 L10.2705296,6.81467358 L10.2705296,7.00913883 Z M12.1601539,6.99552762 C12.1601539,5.61697497 11.6190112,4.32597154 10.6393933,3.34769528 C8.63253764,1.34336744 5.35197452,1.34061603 3.34153136,3.33944106 C3.33868273,3.34219247 3.33607716,3.34494388 3.33322852,3.34769528 C1.32397148,5.35459953 1.32372842,8.63641682 3.33322852,10.6433794 C5.34295224,12.6504489 8.62968901,12.6504489 10.6393933,10.6433794 C11.6190112,9.66506426 12.1601539,8.37408027 12.1601539,6.99552762 Z"></path></svg></span>Created Time</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCreatedAt"><path d="M6.98643729,14.0000972 C5.19579566,14.0000972 3.40419152,13.3106896 2.04245843,11.9323606 C-0.681017475,9.21200555 -0.680780251,4.76029539 2.04293482,2.04012507 C4.76664406,-0.68004331 9.22427509,-0.68004331 11.9480135,2.04013479 C13.272481,3.36277455 14,5.1330091 14,6.99552762 C14,8.87640182 13.2721894,10.6285043 11.9480135,11.9509302 C10.5679344,13.3105924 8.77756503,14.0000972 6.98643729,14.0000972 Z M10.2705296,7.00913883 L10.2705296,8.46099754 L10.2705296,8.65543362 L10.076181,8.65543362 L8.6543739,8.65543362 L5.72059514,8.65543362 L5.52619796,8.65543362 L5.52619796,8.46099754 L5.52619796,5.52541044 L5.52619796,3.37946773 L5.52619796,3.18502193 L5.72059514,3.18502193 L7.17253164,3.18502193 L7.36692883,3.18502193 L7.36692883,3.37946773 L7.36692883,6.81467358 L10.076181,6.81467358 L10.2705296,6.81467358 L10.2705296,7.00913883 Z M12.1601539,6.99552762 C12.1601539,5.61697497 11.6190112,4.32597154 10.6393933,3.34769528 C8.63253764,1.34336744 5.35197452,1.34061603 3.34153136,3.33944106 C3.33868273,3.34219247 3.33607716,3.34494388 3.33322852,3.34769528 C1.32397148,5.35459953 1.32372842,8.63641682 3.33322852,10.6433794 C5.34295224,12.6504489 8.62968901,12.6504489 10.6393933,10.6433794 C11.6190112,9.66506426 12.1601539,8.37408027 12.1601539,6.99552762 Z"></path></svg></span>Last edited time</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesText"><path d="M7,4.56818 C7,4.29204 6.77614,4.06818 6.5,4.06818 L0.5,4.06818 C0.223858,4.06818 0,4.29204 0,4.56818 L0,5.61364 C0,5.88978 0.223858,6.11364 0.5,6.11364 L6.5,6.11364 C6.77614,6.11364 7,5.88978 7,5.61364 L7,4.56818 Z M0.5,1 C0.223858,1 0,1.223858 0,1.5 L0,2.54545 C0,2.8216 0.223858,3.04545 0.5,3.04545 L12.5,3.04545 C12.7761,3.04545 13,2.8216 13,2.54545 L13,1.5 C13,1.223858 12.7761,1 12.5,1 L0.5,1 Z M0,8.68182 C0,8.95796 0.223858,9.18182 0.5,9.18182 L11.5,9.18182 C11.7761,9.18182 12,8.95796 12,8.68182 L12,7.63636 C12,7.36022 11.7761,7.13636 11.5,7.13636 L0.5,7.13636 C0.223858,7.13636 0,7.36022 0,7.63636 L0,8.68182 Z M0,11.75 C0,12.0261 0.223858,12.25 0.5,12.25 L9.5,12.25 C9.77614,12.25 10,12.0261 10,11.75 L10,10.70455 C10,10.4284 9.77614,10.20455 9.5,10.20455 L0.5,10.20455 C0.223858,10.20455 0,10.4284 0,10.70455 L0,11.75 Z"></path></svg></span>Note/Complexity(time, space)</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesCheckbox"><path d="M0,3 C0,1.34314 1.34326,0 3,0 L11,0 C12.6567,0 14,1.34314 14,3 L14,11 C14,12.6569 12.6567,14 11,14 L3,14 C1.34326,14 0,12.6569 0,11 L0,3 Z M3,1.5 C2.17139,1.5 1.5,2.17157 1.5,3 L1.5,11 C1.5,11.8284 2.17139,12.5 3,12.5 L11,12.5 C11.8286,12.5 12.5,11.8284 12.5,11 L12.5,3 C12.5,2.17157 11.8286,1.5 11,1.5 L3,1.5 Z M2.83252,6.8161 L3.39893,6.27399 L3.57617,6.10425 L3.92334,5.77216 L4.26904,6.10559 L4.44531,6.27582 L5.58398,7.37402 L9.28271,3.81073 L9.45996,3.64008 L9.80664,3.3056 L10.1538,3.63989 L10.3311,3.81067 L10.8936,4.35303 L11.0708,4.52399 L11.4434,4.88379 L11.0708,5.24353 L10.8936,5.41437 L6.1084,10.0291 L5.93115,10.2 L5.58398,10.5344 L5.23682,10.2 L5.05957,10.0292 L2.83057,7.87946 L2.65283,7.70801 L2.27832,7.34674 L2.6543,6.98694 L2.83252,6.8161 Z"></path></svg></span>Practiced</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesTitle"><path d="M7.73943662,8.6971831 C7.77640845,8.7834507 7.81338028,8.8943662 7.81338028,9.00528169 C7.81338028,9.49823944 7.40669014,9.89260563 6.91373239,9.89260563 C6.53169014,9.89260563 6.19894366,9.64612676 6.08802817,9.30105634 L5.75528169,8.33978873 L2.05809859,8.33978873 L1.72535211,9.30105634 C1.61443662,9.64612676 1.2693662,9.89260563 0.887323944,9.89260563 C0.394366197,9.89260563 0,9.49823944 0,9.00528169 C0,8.8943662 0.0246478873,8.7834507 0.0616197183,8.6971831 L2.46478873,2.48591549 C2.68661972,1.90669014 3.24119718,1.5 3.90669014,1.5 C4.55985915,1.5 5.12676056,1.90669014 5.34859155,2.48591549 L7.73943662,8.6971831 Z M2.60035211,6.82394366 L5.21302817,6.82394366 L3.90669014,3.10211268 L2.60035211,6.82394366 Z M11.3996479,3.70598592 C12.7552817,3.70598592 14,4.24823944 14,5.96126761 L14,9.07922535 C14,9.52288732 13.6549296,9.89260563 13.2112676,9.89260563 C12.8169014,9.89260563 12.471831,9.59683099 12.4225352,9.19014085 C12.028169,9.6584507 11.3257042,9.95422535 10.5492958,9.95422535 C9.60035211,9.95422535 8.47887324,9.31338028 8.47887324,7.98239437 C8.47887324,6.58978873 9.60035211,6.08450704 10.5492958,6.08450704 C11.3380282,6.08450704 12.040493,6.33098592 12.4348592,6.81161972 L12.4348592,5.98591549 C12.4348592,5.38204225 11.9172535,4.98767606 11.1285211,4.98767606 C10.6602113,4.98767606 10.2411972,5.11091549 9.80985915,5.38204225 C9.72359155,5.43133803 9.61267606,5.46830986 9.50176056,5.46830986 C9.18133803,5.46830986 8.91021127,5.1971831 8.91021127,4.86443662 C8.91021127,4.64260563 9.0334507,4.44542254 9.19366197,4.34683099 C9.87147887,3.90316901 10.6232394,3.70598592 11.3996479,3.70598592 Z M11.1778169,8.8943662 C11.6830986,8.8943662 12.1760563,8.72183099 12.4348592,8.37676056 L12.4348592,7.63732394 C12.1760563,7.29225352 11.6830986,7.11971831 11.1778169,7.11971831 C10.5616197,7.11971831 10.056338,7.45246479 10.056338,8.0193662 C10.056338,8.57394366 10.5616197,8.8943662 11.1778169,8.8943662 Z M0.65625,11.125 L13.34375,11.125 C13.7061869,11.125 14,11.4188131 14,11.78125 C14,12.1436869 13.7061869,12.4375 13.34375,12.4375 L0.65625,12.4375 C0.293813133,12.4375 4.43857149e-17,12.1436869 0,11.78125 C-4.43857149e-17,11.4188131 0.293813133,11.125 0.65625,11.125 Z"></path></svg></span>Solution</th><th><span class="icon property-icon"><svg viewBox="0 0 14 14" style="width:14px;height:14px;display:block;fill:rgba(55, 53, 47, 0.4);flex-shrink:0;-webkit-backface-visibility:hidden" class="typesUrl"><path d="M3.73333,3.86667 L7.46667,3.86667 C8.49613,3.86667 9.33333,4.70387 9.33333,5.73333 C9.33333,6.7628 8.49613,7.6 7.46667,7.6 L6.53333,7.6 C6.01813,7.6 5.6,8.0186 5.6,8.53333 C5.6,9.04807 6.01813,9.46667 6.53333,9.46667 L7.46667,9.46667 C9.5284,9.46667 11.2,7.79507 11.2,5.73333 C11.2,3.6716 9.5284,2 7.46667,2 L3.73333,2 C1.6716,2 0,3.6716 0,5.73333 C0,7.124 0.762067,8.33453 1.88953,8.97713 C1.87553,8.83107 1.86667,8.6836 1.86667,8.53333 C1.86667,7.92013 1.98753,7.33447 2.2036,6.7978 C1.99267,6.4954 1.86667,6.12953 1.86667,5.73333 C1.86667,4.70387 2.70387,3.86667 3.73333,3.86667 Z M12.1095,5.28907 C12.1231,5.4356 12.1333,5.58307 12.1333,5.73333 C12.1333,6.34607 12.0101,6.9294 11.7931,7.46513 C12.0059,7.768 12.1333,8.13573 12.1333,8.53333 C12.1333,9.5628 11.2961,10.4 10.2667,10.4 L6.53333,10.4 C5.50387,10.4 4.66667,9.5628 4.66667,8.53333 C4.66667,7.50387 5.50387,6.66667 6.53333,6.66667 L7.46667,6.66667 C7.98187,6.66667 8.4,6.24807 8.4,5.73333 C8.4,5.2186 7.98187,4.8 7.46667,4.8 L6.53333,4.8 C4.4716,4.8 2.8,6.4716 2.8,8.53333 C2.8,10.59507 4.4716,12.2667 6.53333,12.2667 L10.2667,12.2667 C12.3284,12.2667 14,10.59507 14,8.53333 C14,7.14267 13.2375,5.93167 12.1095,5.28907 Z"></path></svg></span>URL</th></tr></thead><tbody><tr id="a31e9b8c-f883-4ffc-ae06-5faf35c97701"><td class="cell-S*Id">5. Longest Palindromic Substring</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-pink">Dynamic programming</span></td><td class="cell-J1k`"><time>@September 15, 2021 3:42 PM</time></td><td class="cell-#N]j"><time>@September 15, 2021 3:43 PM</time></td><td class="cell-iF=x"><code>O(N^2), O(N^2)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-longest-palindromic-substring-a31e9b8cf8834ffcae065faf35c97701">https://leetcode.com/problems/longest-palindromic-substring/</a></td><td class="cell-inCE"></td></tr><tr id="5baca970-34fc-4449-8c23-f34f0d115d0b"><td class="cell-S*Id">29. Divide Two Integers</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">Math</span></td><td class="cell-J1k`"><time>@September 1, 2021 3:58 PM</time></td><td class="cell-#N]j"><time>@September 1, 2021 4:18 PM</time></td><td class="cell-iF=x"><code>O(N), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-divide-two-integers-5baca97034fc44498c23f34f0d115d0b">https://leetcode.com/problems/divide-two-integers/</a></td><td class="cell-inCE"></td></tr><tr id="02deb99a-e372-49da-a1e9-12ab53b1b0e8"><td class="cell-S*Id">31. Next Permutation</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-pink">Brain Teaser</span></td><td class="cell-J1k`"><time>@September 15, 2021 2:27 PM</time></td><td class="cell-#N]j"><time>@September 15, 2021 3:43 PM</time></td><td class="cell-iF=x"><code>O(N), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-next-permutation-02deb99ae37249daa1e912ab53b1b0e8">https://leetcode.com/problems/next-permutation/</a></td><td class="cell-inCE"></td></tr><tr id="967d3bc4-7ab4-4aeb-b6dd-37333aef1ad5"><td class="cell-S*Id">65. Valid Number</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-pink">Brain Teaser</span></td><td class="cell-J1k`"><time>@September 1, 2021 4:17 PM</time></td><td class="cell-#N]j"><time>@September 1, 2021 5:28 PM</time></td><td class="cell-iF=x"><code>O(N), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-valid-number-967d3bc47ab44aebb6dd37333aef1ad5">https://leetcode.com/problems/valid-number/</a></td><td class="cell-inCE"></td></tr><tr id="1823f8ab-f104-46f4-87b9-16649b16ef7f"><td class="cell-S*Id">71. Simplify Path</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">Stack</span></td><td class="cell-J1k`"><time>@September 1, 2021 5:28 PM</time></td><td class="cell-#N]j"><time>@September 1, 2021 9:18 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-simplify-path-1823f8abf10446f487b916649b16ef7f">https://leetcode.com/problems/simplify-path/</a></td><td class="cell-inCE"></td></tr><tr id="aeaa1256-b056-4109-967b-b4ed1a76d1f6"><td class="cell-S*Id">88. Merge Sorted Array</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">String</span></td><td class="cell-J1k`"><time>@September 15, 2021 9:54 PM</time></td><td class="cell-#N]j"><time>@September 15, 2021 9:54 PM</time></td><td class="cell-iF=x"><code>O(N), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-merge-sorted-array-aeaa1256b0564109967bb4ed1a76d1f6">https://leetcode.com/problems/merge-sorted-array/</a></td><td class="cell-inCE"></td></tr><tr id="7c042bfb-2de3-4cf4-85cd-13faa7a00096"><td class="cell-S*Id">97. Interleaving String</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-pink">Dynamic programming</span></td><td class="cell-J1k`"><time>@September 14, 2021 5:34 PM</time></td><td class="cell-#N]j"><time>@September 14, 2021 5:34 PM</time></td><td class="cell-iF=x"><code>O(N^2), O(N^2)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-interleaving-string-7c042bfb2de34cf485cd13faa7a00096">https://leetcode.com/problems/interleaving-string/</a></td><td class="cell-inCE"></td></tr><tr id="9c52e333-964d-49dc-89f5-aad1665db7f7"><td class="cell-S*Id">124. Binary Tree Maximum Path Sum</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@September 1, 2021 9:20 PM</time></td><td class="cell-#N]j"><time>@September 1, 2021 9:21 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-binary-tree-maximum-path-sum-9c52e333964d49dc89f5aad1665db7f7">https://leetcode.com/problems/binary-tree-maximum-path-sum/</a></td><td class="cell-inCE"></td></tr><tr id="1a023f60-a087-40a4-bc6d-d0b5c460a547"><td class="cell-S*Id">125. Valid Palindrome</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">Array</span></td><td class="cell-J1k`"><time>@September 13, 2021 11:50 PM</time></td><td class="cell-#N]j"><time>@September 13, 2021 11:51 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-valid-palindrome-1a023f60a08740a4bc6dd0b5c460a547">https://leetcode.com/problems/valid-palindrome/</a></td><td class="cell-inCE"></td></tr><tr id="ca8912e5-fdb2-4bae-b501-87bdeccdfed6"><td class="cell-S*Id">139. Word Break</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-pink">Dynamic programming</span></td><td class="cell-J1k`"><time>@September 1, 2021 9:21 PM</time></td><td class="cell-#N]j"><time>@September 2, 2021 4:44 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-word-break-ca8912e5fdb24baeb50187bdeccdfed6">https://leetcode.com/problems/word-break/</a></td><td class="cell-inCE"></td></tr><tr id="0bd6179a-c9a5-4ae5-bd32-be3fde8f8b05"><td class="cell-S*Id">146. LRU Cache</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-default">Design</span></td><td class="cell-J1k`"><time>@September 13, 2021 10:58 PM</time></td><td class="cell-#N]j"><time>@September 13, 2021 11:27 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-lru-cache-0bd6179ac9a54ae5bd32be3fde8f8b05">https://leetcode.com/problems/lru-cache/</a></td><td class="cell-inCE"></td></tr><tr id="20c5326c-7e8b-45ac-96bc-ccc0fb8daeb6"><td class="cell-S*Id">158. Read N Characters Given Read4 II - Call multiple times</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"></td><td class="cell-J1k`"><time>@September 2, 2021 4:59 PM</time></td><td class="cell-#N]j"><time>@September 15, 2021 10:14 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-off"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-read-n-characters-given-read4-ii-call-multiple-times-20c5326c7e8b45ac96bcccc0fb8daeb6">https://leetcode.com/problems/read-n-characters-given-read4-ii-call-multiple-times/</a></td><td class="cell-inCE"></td></tr><tr id="6151ba2f-0a10-48d2-93dc-bdcbb4a26318"><td class="cell-S*Id">163. Missing Ranges</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-pink">Brain Teaser</span></td><td class="cell-J1k`"><time>@September 15, 2021 10:14 PM</time></td><td class="cell-#N]j"><time>@September 15, 2021 10:14 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-missing-ranges-6151ba2f0a1048d293dcbdcbb4a26318">https://leetcode.com/problems/missing-ranges/</a></td><td class="cell-inCE"></td></tr><tr id="a809ac1a-db00-4d92-b580-8e5c887ec65f"><td class="cell-S*Id">173. Binary Search Tree Iterator</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-default">Inorder</span></td><td class="cell-J1k`"><time>@September 2, 2021 4:43 PM</time></td><td class="cell-#N]j"><time>@September 2, 2021 4:44 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-binary-search-tree-iterator-a809ac1adb004d92b5808e5c887ec65f">https://leetcode.com/problems/binary-search-tree-iterator/</a></td><td class="cell-inCE"></td></tr><tr id="241763d8-a769-4917-ab6d-33dfcb238847"><td class="cell-S*Id">199. Binary Tree Right Side View</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-green">BFS</span><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@September 2, 2021 4:43 PM</time></td><td class="cell-#N]j"><time>@September 2, 2021 4:53 PM</time></td><td class="cell-iF=x"><code>O(N), O(H)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-binary-tree-right-side-view-241763d8a7694917ab6d33dfcb238847">https://leetcode.com/problems/binary-tree-right-side-view/</a></td><td class="cell-inCE"></td></tr><tr id="e898c66d-dc63-48fb-a66e-34c695f512f0"><td class="cell-S*Id">211. Design Add and Search Words Data Structure</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-yellow">Trie</span></td><td class="cell-J1k`"><time>@September 2, 2021 4:59 PM</time></td><td class="cell-#N]j"><time>@September 3, 2021 4:10 PM</time></td><td class="cell-iF=x"><code>O(M), O(M)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-design-add-and-search-words-data-structure-e898c66ddc6348fba66e34c695f512f0">https://leetcode.com/problems/design-add-and-search-words-data-structure/</a></td><td class="cell-inCE"></td></tr><tr id="e2344abb-34c1-4e76-af25-0d7fea3e2efc"><td class="cell-S*Id">215. Kth Largest Element in an Array</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-purple">Heap</span></td><td class="cell-J1k`"><time>@September 2, 2021 7:50 PM</time></td><td class="cell-#N]j"><time>@September 2, 2021 8:51 PM</time></td><td class="cell-iF=x"><code>O(Nlog(k)), O(k)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-kth-largest-element-in-an-array-e2344abb34c14e76af250d7fea3e2efc">https://leetcode.com/problems/kth-largest-element-in-an-array/</a></td><td class="cell-inCE"></td></tr><tr id="579dd3a6-8edf-45f9-b855-4e313fc38409"><td class="cell-S*Id">227. Basic Calculator II</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">Stack</span></td><td class="cell-J1k`"><time>@September 2, 2021 7:54 PM</time></td><td class="cell-#N]j"><time>@September 2, 2021 8:52 PM</time></td><td class="cell-iF=x"><code>O(N), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-basic-calculator-ii-579dd3a68edf45f9b8554e313fc38409">https://leetcode.com/problems/basic-calculator-ii/</a></td><td class="cell-inCE"></td></tr><tr id="579e8231-dfde-4be1-b0b6-441e170bc0b4"><td class="cell-S*Id">236. Lowest Common Ancestor of a Binary Tree</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@September 2, 2021 8:37 PM</time></td><td class="cell-#N]j"><time>@September 2, 2021 8:52 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-lowest-common-ancestor-of-a-binary-tree-579e8231dfde4be1b0b6441e170bc0b4">https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree/</a></td><td class="cell-inCE"></td></tr><tr id="ac2bb72c-f9c0-4faf-9088-beeee365d4ad"><td class="cell-S*Id">238. Product of Array Except Self</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-red">Prefix Sum</span></td><td class="cell-J1k`"><time>@September 3, 2021 4:11 PM</time></td><td class="cell-#N]j"><time>@September 3, 2021 4:14 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-product-of-array-except-self-ac2bb72cf9c04faf9088beeee365d4ad">https://leetcode.com/problems/product-of-array-except-self/</a></td><td class="cell-inCE"></td></tr><tr id="808944fd-b98e-4dc0-9338-7f9e1379f938"><td class="cell-S*Id">249. Group Shifted Strings</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-brown">HashMap</span></td><td class="cell-J1k`"><time>@September 3, 2021 4:14 PM</time></td><td class="cell-#N]j"><time>@September 3, 2021 4:51 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-group-shifted-strings-808944fdb98e4dc093387f9e1379f938">https://leetcode.com/problems/group-shifted-strings/</a></td><td class="cell-inCE"></td></tr><tr id="533450e5-1a64-47fa-9de4-c89e8ec39de6"><td class="cell-S*Id">269. Alien Dictionary</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-gray">Topological sorting</span></td><td class="cell-J1k`"><time>@September 3, 2021 4:50 PM</time></td><td class="cell-#N]j"><time>@September 20, 2021 5:12 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-alien-dictionary-533450e51a6447fa9de4c89e8ec39de6">https://leetcode.com/problems/alien-dictionary/</a></td><td class="cell-inCE"></td></tr><tr id="667ce9c2-d5b9-4807-aabd-e3581636915a"><td class="cell-S*Id">270. Closest Binary Search Tree Value</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-purple">Binary Indexed Tree</span></td><td class="cell-J1k`"><time>@September 3, 2021 4:51 PM</time></td><td class="cell-#N]j"><time>@September 3, 2021 6:20 PM</time></td><td class="cell-iF=x"><code>O(log(N)), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-closest-binary-search-tree-value-667ce9c2d5b94807aabde3581636915a">https://leetcode.com/problems/closest-binary-search-tree-value/</a></td><td class="cell-inCE"></td></tr><tr id="f12c36b0-b196-4b20-911b-591d25ead8e2"><td class="cell-S*Id">282. Expression Add Operators</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">Backtrace</span></td><td class="cell-J1k`"><time>@September 3, 2021 5:02 PM</time></td><td class="cell-#N]j"><time>@September 3, 2021 6:28 PM</time></td><td class="cell-iF=x"><code>O(2^N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-expression-add-operators-f12c36b0b1964b20911b591d25ead8e2">https://leetcode.com/problems/expression-add-operators/</a></td><td class="cell-inCE"></td></tr><tr id="7ced5b89-9971-4925-8be9-be342efef030"><td class="cell-S*Id">301. Remove Invalid Parentheses</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">Backtrace</span></td><td class="cell-J1k`"><time>@September 3, 2021 6:16 PM</time></td><td class="cell-#N]j"><time>@September 3, 2021 6:28 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-remove-invalid-parentheses-7ced5b89997149258be9be342efef030">https://leetcode.com/problems/remove-invalid-parentheses/</a></td><td class="cell-inCE"></td></tr><tr id="2583ea55-9c20-4df2-916d-4819a3dcef27"><td class="cell-S*Id">314. Binary Tree Vertical Order Traversal</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-green">BFS</span></td><td class="cell-J1k`"><time>@September 3, 2021 6:28 PM</time></td><td class="cell-#N]j"><time>@September 3, 2021 6:28 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-binary-tree-vertical-order-traversal-submissions-2583ea559c204df2916d4819a3dcef27">https://leetcode.com/problems/binary-tree-vertical-order-traversal/submissions/</a></td><td class="cell-inCE"></td></tr><tr id="761caa4a-4d68-4379-af2e-f841a1068e33"><td class="cell-S*Id">317. Shortest Distance from All Buildings</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"></td><td class="cell-J1k`"><time>@September 3, 2021 6:29 PM</time></td><td class="cell-#N]j"><time>@September 3, 2021 6:29 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-off"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-shortest-distance-from-all-buildings-761caa4a4d684379af2ef841a1068e33">https://leetcode.com/problems/shortest-distance-from-all-buildings/</a></td><td class="cell-inCE"></td></tr><tr id="5eac0380-fb47-48c8-8d05-e1567a67d571"><td class="cell-S*Id">347. Top K Frequent Elements</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-purple">Heap</span></td><td class="cell-J1k`"><time>@September 15, 2021 9:59 PM</time></td><td class="cell-#N]j"><time>@September 15, 2021 9:59 PM</time></td><td class="cell-iF=x"><code>O(Nlog(k)), O(N + k)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-top-k-frequent-elements-solution-5eac0380fb4748c88d05e1567a67d571">https://leetcode.com/problems/top-k-frequent-elements/solution/</a></td><td class="cell-inCE"></td></tr><tr id="519f4165-720f-4c62-8dc9-448c9e62bc08"><td class="cell-S*Id">398. Random Pick Index</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"></td><td class="cell-J1k`"><time>@September 3, 2021 6:29 PM</time></td><td class="cell-#N]j"><time>@September 3, 2021 8:00 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-random-pick-index-519f4165720f4c628dc9448c9e62bc08">https://leetcode.com/problems/random-pick-index/</a></td><td class="cell-inCE"></td></tr><tr id="19a4276c-4aad-4c98-863d-7d8b06a60ab0"><td class="cell-S*Id">408. Valid Word Abbreviation</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">String</span></td><td class="cell-J1k`"><time>@September 6, 2021 8:27 PM</time></td><td class="cell-#N]j"><time>@September 9, 2021 1:30 AM</time></td><td class="cell-iF=x"><code>O(N), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-valid-word-abbreviation-submissions-19a4276c4aad4c98863d7d8b06a60ab0">https://leetcode.com/problems/valid-word-abbreviation/submissions/</a></td><td class="cell-inCE"></td></tr><tr id="bb40a080-814e-4002-9115-4c74fa713125"><td class="cell-S*Id">415. Add Strings</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">Math</span></td><td class="cell-J1k`"><time>@September 3, 2021 8:00 PM</time></td><td class="cell-#N]j"><time>@September 3, 2021 8:00 PM</time></td><td class="cell-iF=x"><code>O(N), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/bb40a080814e400291154c74fa713125">Untitled</a></td><td class="cell-inCE"></td></tr><tr id="9621e00d-9b71-4ba9-bf02-ffcfae01427f"><td class="cell-S*Id">426. Convert Binary Search Tree to Sorted Doubly Linked List</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@September 3, 2021 8:01 PM</time></td><td class="cell-#N]j"><time>@September 3, 2021 8:01 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-convert-binary-search-tree-to-sorted-doubly-linked-list-9621e00d9b714ba9bf02ffcfae01427f">https://leetcode.com/problems/convert-binary-search-tree-to-sorted-doubly-linked-list/</a></td><td class="cell-inCE"></td></tr><tr id="1d3b3834-9053-48b3-9b57-96c1c70c0baa"><td class="cell-S*Id">523. Continuous Subarray Sum</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">Array</span></td><td class="cell-J1k`"><time>@September 3, 2021 8:19 PM</time></td><td class="cell-#N]j"><time>@September 3, 2021 8:25 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-continuous-subarray-sum-1d3b3834905348b39b5796c1c70c0baa">https://leetcode.com/problems/continuous-subarray-sum/</a></td><td class="cell-inCE"></td></tr><tr id="2720bef9-f01d-4345-93ed-9ca2aeb1e1a5"><td class="cell-S*Id">528. Random Pick with Weight</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-red">Binary Search</span><span class="selected-value select-value-color-red">Prefix Sum</span></td><td class="cell-J1k`"><time>@September 3, 2021 9:25 PM</time></td><td class="cell-#N]j"><time>@September 3, 2021 9:39 PM</time></td><td class="cell-iF=x"><code>O(N), O(log(N))</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-random-pick-with-weight-2720bef9f01d434593ed9ca2aeb1e1a5">https://leetcode.com/problems/random-pick-with-weight/</a></td><td class="cell-inCE"></td></tr><tr id="152032bd-1284-460a-af52-931850b650d6"><td class="cell-S*Id">536. Construct Binary Tree from String</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span><span class="selected-value select-value-color-blue">String</span></td><td class="cell-J1k`"><time>@September 6, 2021 3:55 PM</time></td><td class="cell-#N]j"><time>@September 6, 2021 4:02 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-construct-binary-tree-from-string-152032bd1284460aaf52931850b650d6">https://leetcode.com/problems/construct-binary-tree-from-string/</a></td><td class="cell-inCE"></td></tr><tr id="13e140c4-e459-487f-ab7f-ec83ea050728"><td class="cell-S*Id">543. Diameter of Binary Tree</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@September 6, 2021 4:01 PM</time></td><td class="cell-#N]j"><time>@September 6, 2021 4:02 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-diameter-of-binary-tree-13e140c4e459487fab7fec83ea050728">https://leetcode.com/problems/diameter-of-binary-tree/</a></td><td class="cell-inCE"></td></tr><tr id="6f9e9867-be8f-4836-9c56-82255eca07eb"><td class="cell-S*Id">560. Subarray Sum Equals K</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-brown">HashMap</span></td><td class="cell-J1k`"><time>@September 6, 2021 4:04 PM</time></td><td class="cell-#N]j"><time>@September 6, 2021 4:05 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-subarray-sum-equals-k-submissions-6f9e9867be8f48369c5682255eca07eb">https://leetcode.com/problems/subarray-sum-equals-k/submissions/</a></td><td class="cell-inCE"></td></tr><tr id="49e5889d-6bac-4c79-8fcb-869de32d7be4"><td class="cell-S*Id">636. Exclusive Time of Functions</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">Stack</span></td><td class="cell-J1k`"><time>@September 6, 2021 4:05 PM</time></td><td class="cell-#N]j"><time>@September 6, 2021 4:15 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-exclusive-time-of-functions-49e5889d6bac4c798fcb869de32d7be4">https://leetcode.com/problems/exclusive-time-of-functions/</a></td><td class="cell-inCE"></td></tr><tr id="3525b09e-370c-4638-bf2b-83ca238393a1"><td class="cell-S*Id">670. Maximum Swap</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-brown">HashMap</span></td><td class="cell-J1k`"><time>@September 6, 2021 5:00 PM</time></td><td class="cell-#N]j"><time>@September 6, 2021 5:01 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-maximum-swap-3525b09e370c4638bf2b83ca238393a1">https://leetcode.com/problems/maximum-swap/</a></td><td class="cell-inCE"></td></tr><tr id="16774de5-b0da-44f9-8a23-ea193ec04214"><td class="cell-S*Id">680. Valid Palindrome II</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">String</span></td><td class="cell-J1k`"><time>@September 9, 2021 1:30 AM</time></td><td class="cell-#N]j"><time>@September 9, 2021 1:35 AM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-valid-palindrome-ii-16774de5b0da44f98a23ea193ec04214">https://leetcode.com/problems/valid-palindrome-ii/</a></td><td class="cell-inCE"></td></tr><tr id="b461351e-54e0-4ab0-b508-f0a769620194"><td class="cell-S*Id">708. Insert into a Sorted Circular Linked List</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-pink">Brain Teaser</span></td><td class="cell-J1k`"><time>@September 9, 2021 1:35 AM</time></td><td class="cell-#N]j"><time>@September 9, 2021 2:02 AM</time></td><td class="cell-iF=x"><code>O(N), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-insert-into-a-sorted-circular-linked-list-b461351e54e04ab0b508f0a769620194">https://leetcode.com/problems/insert-into-a-sorted-circular-linked-list/</a></td><td class="cell-inCE"></td></tr><tr id="38bf61c7-a47b-4475-9217-729d9d4d99a3"><td class="cell-S*Id">721. Accounts Merge</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@September 9, 2021 2:03 AM</time></td><td class="cell-#N]j"><time>@September 13, 2021 11:32 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-accounts-merge-38bf61c7a47b44759217729d9d4d99a3">https://leetcode.com/problems/accounts-merge/</a></td><td class="cell-inCE"></td></tr><tr id="def238e8-6183-449e-b929-fc525f637cc0"><td class="cell-S*Id">766. Toeplitz Matrix</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"></td><td class="cell-J1k`"><time>@September 13, 2021 11:32 PM</time></td><td class="cell-#N]j"><time>@September 13, 2021 11:40 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-toeplitz-matrix-def238e86183449eb929fc525f637cc0">https://leetcode.com/problems/toeplitz-matrix/</a></td><td class="cell-inCE"></td></tr><tr id="9c312e39-097f-4e1a-8f4f-6bf1b34437be"><td class="cell-S*Id">827. Making A Large Island</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"></td><td class="cell-J1k`"><time>@September 10, 2021 1:45 PM</time></td><td class="cell-#N]j"><time>@September 13, 2021 10:57 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-off"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-making-a-large-island-9c312e39097f4e1a8f4f6bf1b34437be">https://leetcode.com/problems/making-a-large-island/</a></td><td class="cell-inCE"></td></tr><tr id="815805cd-5af3-401a-a806-6a20a33d3564"><td class="cell-S*Id">863. All Nodes Distance K in Binary Tree</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-green">BFS</span></td><td class="cell-J1k`"><time>@September 13, 2021 10:57 PM</time></td><td class="cell-#N]j"><time>@September 13, 2021 10:57 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-all-nodes-distance-k-in-binary-tree-815805cd5af3401aa8066a20a33d3564">https://leetcode.com/problems/all-nodes-distance-k-in-binary-tree/</a></td><td class="cell-inCE"></td></tr><tr id="25a206b6-911a-40e1-b62d-f7b0c4bd2bdd"><td class="cell-S*Id">921. Minimum Add to Make Parentheses Valid</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">Stack</span></td><td class="cell-J1k`"><time>@September 10, 2021 1:46 PM</time></td><td class="cell-#N]j"><time>@September 10, 2021 1:48 PM</time></td><td class="cell-iF=x"><code>O(N), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-minimum-add-to-make-parentheses-valid-25a206b6911a40e1b62df7b0c4bd2bdd">https://leetcode.com/problems/minimum-add-to-make-parentheses-valid/</a></td><td class="cell-inCE"></td></tr><tr id="05b02319-4f5e-4100-b670-e6de371184d8"><td class="cell-S*Id">938. Range Sum of BST</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@September 10, 2021 1:51 PM</time></td><td class="cell-#N]j"><time>@September 10, 2021 1:52 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-range-sum-of-bst-solution-05b023194f5e4100b670e6de371184d8">https://leetcode.com/problems/range-sum-of-bst/solution/</a></td><td class="cell-inCE"></td></tr><tr id="f26d30ec-ffae-466e-b698-1c725a24fa5f"><td class="cell-S*Id">953. Verifying an Alien Dictionary</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">String</span></td><td class="cell-J1k`"><time>@September 10, 2021 1:52 PM</time></td><td class="cell-#N]j"><time>@September 10, 2021 1:59 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-verifying-an-alien-dictionary-f26d30ecffae466eb6981c725a24fa5f">https://leetcode.com/problems/verifying-an-alien-dictionary/</a></td><td class="cell-inCE"></td></tr><tr id="e503c2a2-b482-429b-aceb-e8b23b6f6646"><td class="cell-S*Id">973. K Closest Points to Origin</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-purple">Heap</span></td><td class="cell-J1k`"><time>@September 10, 2021 2:00 PM</time></td><td class="cell-#N]j"><time>@September 10, 2021 2:26 PM</time></td><td class="cell-iF=x"><code>O(K), O(Nlog(K))</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-k-closest-points-to-origin-e503c2a2b482429bacebe8b23b6f6646">https://leetcode.com/problems/k-closest-points-to-origin/</a></td><td class="cell-inCE"></td></tr><tr id="ad240c9e-84fe-40a9-8b62-68f0b43ab732"><td class="cell-S*Id">977. Squares of a Sorted Array</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">Array</span></td><td class="cell-J1k`"><time>@September 13, 2021 11:27 PM</time></td><td class="cell-#N]j"><time>@September 13, 2021 11:32 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-squares-of-a-sorted-array-ad240c9e84fe40a98b6268f0b43ab732">https://leetcode.com/problems/squares-of-a-sorted-array/</a></td><td class="cell-inCE"></td></tr><tr id="f4bc5bda-a5c2-4b2b-8173-ba045ab44a80"><td class="cell-S*Id">1032. Stream of Characters</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-yellow">Trie</span></td><td class="cell-J1k`"><time>@September 28, 2021 11:09 AM</time></td><td class="cell-#N]j"><time>@September 28, 2021 11:09 AM</time></td><td class="cell-iF=x"><code>O(1), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-design-add-and-search-words-data-structure-f4bc5bdaa5c24b2b8173ba045ab44a80">https://leetcode.com/problems/design-add-and-search-words-data-structure/</a></td><td class="cell-inCE"></td></tr><tr id="169bfac4-b6db-4528-8981-3f4ad1be37cd"><td class="cell-S*Id">691. Stickers to Spell Word</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"></td><td class="cell-J1k`"><time>@September 27, 2021 10:47 PM</time></td><td class="cell-#N]j"><time>@September 27, 2021 10:47 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-off"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-stickers-to-spell-word-169bfac4b6db452889813f4ad1be37cd">https://leetcode.com/problems/stickers-to-spell-word/</a></td><td class="cell-inCE"></td></tr><tr id="decd8569-b46d-499a-91a1-b66bcd8adc0f"><td class="cell-S*Id">76. Minimum Window Substring</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"></td><td class="cell-J1k`"><time>@September 27, 2021 11:11 PM</time></td><td class="cell-#N]j"><time>@September 27, 2021 11:11 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-off"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-minimum-window-substring-decd8569b46d499a91a1b66bcd8adc0f">https://leetcode.com/problems/minimum-window-substring/</a></td><td class="cell-inCE"></td></tr><tr id="18a11a1f-a002-450f-ac98-ca39cf009de5"><td class="cell-S*Id">1331. Rank Transform of an Array</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-brown">HashMap</span></td><td class="cell-J1k`"><time>@September 27, 2021 11:18 PM</time></td><td class="cell-#N]j"><time>@September 27, 2021 11:20 PM</time></td><td class="cell-iF=x"><code>O(K), O(Nlog(N))</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-rank-transform-of-an-array-18a11a1fa002450fac98ca39cf009de5">https://leetcode.com/problems/rank-transform-of-an-array/</a></td><td class="cell-inCE"></td></tr><tr id="f8088ca5-baae-4c63-9da2-07525d2e7578"><td class="cell-S*Id">10. Regular Expression Matching</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"></td><td class="cell-J1k`"><time>@September 27, 2021 11:43 PM</time></td><td class="cell-#N]j"><time>@September 27, 2021 11:43 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-off"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-regular-expression-matching-f8088ca5baae4c639da207525d2e7578">https://leetcode.com/problems/regular-expression-matching/</a></td><td class="cell-inCE"></td></tr><tr id="4affa5d1-472b-4e0b-9863-3638396de31e"><td class="cell-S*Id">116. Populating Next Right Pointers in Each Node</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-pink">Brain Teaser</span></td><td class="cell-J1k`"><time>@September 27, 2021 11:44 PM</time></td><td class="cell-#N]j"><time>@September 27, 2021 11:44 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-populating-next-right-pointers-in-each-node-4affa5d1472b4e0b98633638396de31e">https://leetcode.com/problems/populating-next-right-pointers-in-each-node/</a></td><td class="cell-inCE"></td></tr><tr id="0cbdfdba-b48d-4f28-9d2b-6c985dbb127f"><td class="cell-S*Id">986. Interval List Intersections</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">Stack</span></td><td class="cell-J1k`"><time>@September 10, 2021 2:06 PM</time></td><td class="cell-#N]j"><time>@September 10, 2021 2:26 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-interval-list-intersections-0cbdfdbab48d4f289d2b6c985dbb127f">https://leetcode.com/problems/interval-list-intersections/</a></td><td class="cell-inCE"></td></tr><tr id="a1642613-05a9-46b7-be2f-253bfa9d7c54"><td class="cell-S*Id">1047. Remove All Adjacent Duplicates In String</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">Stack</span></td><td class="cell-J1k`"><time>@September 10, 2021 2:37 PM</time></td><td class="cell-#N]j"><time>@September 10, 2021 2:37 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-remove-all-adjacent-duplicates-in-string-a164261305a946b7be2f253bfa9d7c54">https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string/</a></td><td class="cell-inCE"></td></tr><tr id="6e6ae2f7-911b-4803-8440-7bd07da082b1"><td class="cell-S*Id">1216. Valid Palindrome III</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-pink">Dynamic programming</span></td><td class="cell-J1k`"><time>@September 15, 2021 4:19 PM</time></td><td class="cell-#N]j"><time>@September 15, 2021 4:19 PM</time></td><td class="cell-iF=x"><code>O(N^2), O(N^2)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-valid-palindrome-iii-6e6ae2f7911b480384407bd07da082b1">https://leetcode.com/problems/valid-palindrome-iii/</a></td><td class="cell-inCE"></td></tr><tr id="745d76af-622a-4585-9478-32097a0e1642"><td class="cell-S*Id">1263. Minimum Moves to Move a Box to Their Target Location</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"></td><td class="cell-J1k`"><time>@September 10, 2021 2:42 PM</time></td><td class="cell-#N]j"><time>@September 10, 2021 2:43 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-off"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-minimum-moves-to-move-a-box-to-their-target-location-745d76af622a4585947832097a0e1642">https://leetcode.com/problems/minimum-moves-to-move-a-box-to-their-target-location/</a></td><td class="cell-inCE"></td></tr><tr id="7c8f20f7-a42f-4193-9edd-dd56c42016a9"><td class="cell-S*Id">1382. Balance a Binary Search Tree</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@September 13, 2021 8:21 PM</time></td><td class="cell-#N]j"><time>@September 16, 2021 4:40 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-balance-a-binary-search-tree-submissions-7c8f20f7a42f41939edddd56c42016a9">https://leetcode.com/problems/balance-a-binary-search-tree/submissions/</a></td><td class="cell-inCE"></td></tr><tr id="133fba64-e876-4244-a0ce-5a097765925a"><td class="cell-S*Id">1428. Leftmost Column with at Least a One</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-red">Binary Search</span><span class="selected-value select-value-color-pink">Brain Teaser</span></td><td class="cell-J1k`"><time>@September 10, 2021 2:43 PM</time></td><td class="cell-#N]j"><time>@September 10, 2021 4:38 PM</time></td><td class="cell-iF=x"><code>O(log(N)), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-leftmost-column-with-at-least-a-one-133fba64e8764244a0ce5a097765925a">https://leetcode.com/problems/leftmost-column-with-at-least-a-one/</a></td><td class="cell-inCE"></td></tr><tr id="f08b2e1b-2ca0-4b48-a80b-74d960f03e49"><td class="cell-S*Id">1570. Dot Product of Two Sparse Vectors</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-brown">HashMap</span></td><td class="cell-J1k`"><time>@September 10, 2021 4:38 PM</time></td><td class="cell-#N]j"><time>@September 10, 2021 4:45 PM</time></td><td class="cell-iF=x"><code>O(L), O(L)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-dot-product-of-two-sparse-vectors-f08b2e1b2ca04b48a80b74d960f03e49">https://leetcode.com/problems/dot-product-of-two-sparse-vectors/</a></td><td class="cell-inCE"></td></tr><tr id="00e49a16-94a2-423a-923b-f4ef8ead1cee"><td class="cell-S*Id">1650. Lowest Common Ancestor of a Binary Tree III</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-brown">Set</span></td><td class="cell-J1k`"><time>@September 10, 2021 4:45 PM</time></td><td class="cell-#N]j"><time>@September 10, 2021 4:49 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-lowest-common-ancestor-of-a-binary-tree-iii-00e49a1694a2423a923bf4ef8ead1cee">https://leetcode.com/problems/lowest-common-ancestor-of-a-binary-tree-iii/</a></td><td class="cell-inCE"></td></tr><tr id="c6ec55db-95d5-4e32-8227-6c57b456b1f0"><td class="cell-S*Id">1762. Buildings With an Ocean View</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">String</span></td><td class="cell-J1k`"><time>@September 10, 2021 4:50 PM</time></td><td class="cell-#N]j"><time>@September 10, 2021 4:59 PM</time></td><td class="cell-iF=x"><code>O(N), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-buildings-with-an-ocean-view-c6ec55db95d54e3282276c57b456b1f0">https://leetcode.com/problems/buildings-with-an-ocean-view/</a></td><td class="cell-inCE"></td></tr><tr id="9251d7e4-41ea-438b-8783-286c3c40f1cb"><td class="cell-S*Id">1891. Cutting Ribbons</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-red">Binary Search</span></td><td class="cell-J1k`"><time>@September 15, 2021 4:23 PM</time></td><td class="cell-#N]j"><time>@September 15, 2021 9:46 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-cutting-ribbons-9251d7e441ea438b8783286c3c40f1cb">https://leetcode.com/problems/cutting-ribbons/</a></td><td class="cell-inCE"></td></tr><tr id="c7180fff-8085-4250-881c-8a012f55490d"><td class="cell-S*Id">298. Binary Tree Longest Consecutive Sequence</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@September 16, 2021 1:49 AM</time></td><td class="cell-#N]j"><time>@September 16, 2021 1:50 AM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-binary-tree-longest-consecutive-sequence-c7180fff80854250881c8a012f55490d">https://leetcode.com/problems/binary-tree-longest-consecutive-sequence/</a></td><td class="cell-inCE"></td></tr><tr id="843e896c-3868-4e03-8cfa-92df9de55df6"><td class="cell-S*Id">1249. Minimum Remove to Make Valid Parentheses</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">Stack</span></td><td class="cell-J1k`"><time>@September 16, 2021 1:51 AM</time></td><td class="cell-#N]j"><time>@September 16, 2021 1:51 AM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-minimum-remove-to-make-valid-parentheses-843e896c38684e038cfa92df9de55df6">https://leetcode.com/problems/minimum-remove-to-make-valid-parentheses/</a></td><td class="cell-inCE"></td></tr><tr id="127a7dfa-6b2f-4265-9d84-3b1e45fe92ad"><td class="cell-S*Id">494. Target Sum</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">Backtrace</span><span class="selected-value select-value-color-pink">Dynamic programming</span></td><td class="cell-J1k`"><time>@September 16, 2021 2:10 AM</time></td><td class="cell-#N]j"><time>@September 16, 2021 2:29 AM</time></td><td class="cell-iF=x"><code>O(2^N), O(2^N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-target-sum-127a7dfa6b2f42659d843b1e45fe92ad">https://leetcode.com/problems/target-sum/</a></td><td class="cell-inCE"></td></tr><tr id="01327bc9-303e-457c-9234-d22b47a75ec9"><td class="cell-S*Id">91. Decode Ways</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">String</span></td><td class="cell-J1k`"><time>@September 16, 2021 11:54 AM</time></td><td class="cell-#N]j"><time>@September 16, 2021 11:57 AM</time></td><td class="cell-iF=x"><code>O(N), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-decode-ways-01327bc9303e457c9234d22b47a75ec9">https://leetcode.com/problems/decode-ways/</a></td><td class="cell-inCE"></td></tr><tr id="ed9fa8a6-c615-4e87-aecd-502a132fb7f4"><td class="cell-S*Id">691. Stickers to Spell Word</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"></td><td class="cell-J1k`"><time>@September 16, 2021 11:57 AM</time></td><td class="cell-#N]j"><time>@September 16, 2021 3:19 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-off"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-stickers-to-spell-word-ed9fa8a6c6154e87aecd502a132fb7f4">https://leetcode.com/problems/stickers-to-spell-word/</a></td><td class="cell-inCE"></td></tr><tr id="236a9703-a98e-4494-b8e0-009c67ec5b40"><td class="cell-S*Id">380. Insert Delete GetRandom O(1)</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-default">Design</span></td><td class="cell-J1k`"><time>@September 16, 2021 3:30 PM</time></td><td class="cell-#N]j"><time>@September 16, 2021 3:30 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-insert-delete-getrandom-o1-236a9703a98e4494b8e0009c67ec5b40">https://leetcode.com/problems/insert-delete-getrandom-o1/</a></td><td class="cell-inCE"></td></tr><tr id="204cbb66-b046-4b21-99ac-f7334388c427"><td class="cell-S*Id">605. Can Place Flowers</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">String</span></td><td class="cell-J1k`"><time>@September 16, 2021 3:34 PM</time></td><td class="cell-#N]j"><time>@September 16, 2021 3:48 PM</time></td><td class="cell-iF=x"><code>O(N), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-can-place-flowers-204cbb66b0464b2199acf7334388c427">https://leetcode.com/problems/can-place-flowers/</a></td><td class="cell-inCE"></td></tr><tr id="6a26ca35-5a14-491d-9d3e-8c0c070fd2d0"><td class="cell-S*Id">266. Palindrome Permutation</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">Binary number</span></td><td class="cell-J1k`"><time>@September 16, 2021 3:50 PM</time></td><td class="cell-#N]j"><time>@September 16, 2021 4:40 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-palindrome-permutation-6a26ca355a14491d9d3e8c0c070fd2d0">https://leetcode.com/problems/palindrome-permutation/</a></td><td class="cell-inCE"></td></tr><tr id="2629e957-b974-4020-952e-73c710d2ad45"><td class="cell-S*Id">983. Minimum Cost For Tickets</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-pink">Dynamic programming</span></td><td class="cell-J1k`"><time>@September 16, 2021 3:56 PM</time></td><td class="cell-#N]j"><time>@September 16, 2021 4:45 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-minimum-cost-for-tickets-2629e957b9744020952e73c710d2ad45">https://leetcode.com/problems/minimum-cost-for-tickets/</a></td><td class="cell-inCE"></td></tr><tr id="e6e8125a-57b2-4edb-b60e-2c75eee5d591"><td class="cell-S*Id">658. Find K Closest Elements</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-red">Binary Search</span><span class="selected-value select-value-color-purple">Heap</span></td><td class="cell-J1k`"><time>@September 16, 2021 4:31 PM</time></td><td class="cell-#N]j"><time>@September 16, 2021 4:45 PM</time></td><td class="cell-iF=x"><code>O(log(N)), O(K)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-find-k-closest-elements-e6e8125a57b24edbb60e2c75eee5d591">https://leetcode.com/problems/find-k-closest-elements/</a></td><td class="cell-inCE"></td></tr><tr id="5923a9e8-16a3-4f3b-b4bc-b194efa356b1"><td class="cell-S*Id">162. Find Peak Element</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-red">Binary Search</span></td><td class="cell-J1k`"><time>@September 16, 2021 4:40 PM</time></td><td class="cell-#N]j"><time>@September 16, 2021 5:20 PM</time></td><td class="cell-iF=x"><code>O(log(N)), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-find-peak-element-5923a9e816a34f3bb4bcb194efa356b1">https://leetcode.com/problems/find-peak-element/</a></td><td class="cell-inCE"></td></tr><tr id="091c7c1b-f1fd-4ba2-a9ad-623bfec73f2a"><td class="cell-S*Id">621. Task Scheduler</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-pink">Brain Teaser</span></td><td class="cell-J1k`"><time>@September 16, 2021 4:45 PM</time></td><td class="cell-#N]j"><time>@September 16, 2021 5:20 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-task-scheduler-091c7c1bf1fd4ba2a9ad623bfec73f2a">https://leetcode.com/problems/task-scheduler/</a></td><td class="cell-inCE"></td></tr><tr id="328874e4-ff61-46b5-8dd7-17a46910c731"><td class="cell-S*Id">1209. Remove All Adjacent Duplicates in String II</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">Stack</span></td><td class="cell-J1k`"><time>@September 16, 2021 5:21 PM</time></td><td class="cell-#N]j"><time>@September 16, 2021 5:29 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-remove-all-adjacent-duplicates-in-string-ii-328874e4ff6146b58dd717a46910c731">https://leetcode.com/problems/remove-all-adjacent-duplicates-in-string-ii/</a></td><td class="cell-inCE"></td></tr><tr id="97f32f68-ea7b-46e5-95f2-6f75493ec36b"><td class="cell-S*Id">1004. Max Consecutive Ones III</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-gray">Sliding Windows</span></td><td class="cell-J1k`"><time>@September 16, 2021 5:29 PM</time></td><td class="cell-#N]j"><time>@September 16, 2021 5:37 PM</time></td><td class="cell-iF=x"><code>O(N), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-max-consecutive-ones-iii-97f32f68ea7b46e595f26f75493ec36b">https://leetcode.com/problems/max-consecutive-ones-iii/</a></td><td class="cell-inCE"></td></tr><tr id="65937604-3f13-4cb8-ad2e-86ee429cf52c"><td class="cell-S*Id">129. Sum Root to Leaf Numbers</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-green">BFS</span></td><td class="cell-J1k`"><time>@September 16, 2021 5:44 PM</time></td><td class="cell-#N]j"><time>@September 16, 2021 5:52 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-sum-root-to-leaf-numbers-659376043f134cb8ad2e86ee429cf52c">https://leetcode.com/problems/sum-root-to-leaf-numbers/</a></td><td class="cell-inCE"></td></tr><tr id="c73814fc-eb03-46f1-a84f-6d5bce7f7c4c"><td class="cell-S*Id">935. Knight Dialer</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-pink">Dynamic programming</span></td><td class="cell-J1k`"><time>@September 16, 2021 5:51 PM</time></td><td class="cell-#N]j"><time>@September 16, 2021 10:09 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-knight-dialer-c73814fceb0346f1a84f6d5bce7f7c4c">https://leetcode.com/problems/knight-dialer/</a></td><td class="cell-inCE"></td></tr><tr id="cc1ba1cd-1686-46b0-9e31-45c109a77b65"><td class="cell-S*Id">34. Find First and Last Position of Element in Sorted Array</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-red">Binary Search</span></td><td class="cell-J1k`"><time>@September 18, 2021 8:31 PM</time></td><td class="cell-#N]j"><time>@September 18, 2021 8:47 PM</time></td><td class="cell-iF=x"><code>O(log(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-find-first-and-last-position-of-element-in-sorted-array-cc1ba1cd168646b09e3145c109a77b65">https://leetcode.com/problems/find-first-and-last-position-of-element-in-sorted-array/</a></td><td class="cell-inCE"></td></tr><tr id="06ac0857-f760-4328-ab0e-15001da0e7f1"><td class="cell-S*Id">76. Minimum Window Substring</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">String</span></td><td class="cell-J1k`"><time>@September 18, 2021 10:38 PM</time></td><td class="cell-#N]j"><time>@September 18, 2021 10:38 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-minimum-window-substring-06ac0857f7604328ab0e15001da0e7f1">https://leetcode.com/problems/minimum-window-substring/</a></td><td class="cell-inCE"></td></tr><tr id="f1eb6032-4788-48c1-880f-9906aec469da"><td class="cell-S*Id">50. Pow(x, n)</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">Math</span></td><td class="cell-J1k`"><time>@September 18, 2021 10:42 PM</time></td><td class="cell-#N]j"><time>@September 18, 2021 10:49 PM</time></td><td class="cell-iF=x"><code>O(log()N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-powx-n-f1eb6032478848c1880f9906aec469da">https://leetcode.com/problems/powx-n/</a></td><td class="cell-inCE"></td></tr><tr id="9ad117af-1e06-46df-98eb-3904d01c3422"><td class="cell-S*Id">138. Copy List with Random Pointer</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@September 18, 2021 10:49 PM</time></td><td class="cell-#N]j"><time>@September 18, 2021 10:50 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-copy-list-with-random-pointer-9ad117af1e0646df98eb3904d01c3422">https://leetcode.com/problems/copy-list-with-random-pointer/</a></td><td class="cell-inCE"></td></tr><tr id="e1145e01-7cd3-431a-a177-cfeaaf22b937"><td class="cell-S*Id">1868. Product of Two Run-Length Encoded Arrays</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">String</span></td><td class="cell-J1k`"><time>@September 18, 2021 11:11 PM</time></td><td class="cell-#N]j"><time>@September 18, 2021 11:11 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-product-of-two-run-length-encoded-arrays-e1145e017cd3431aa177cfeaaf22b937">https://leetcode.com/problems/product-of-two-run-length-encoded-arrays/</a></td><td class="cell-inCE"></td></tr><tr id="4edd53b8-3ecd-4c8d-94f2-2e482bcd4fb2"><td class="cell-S*Id">267. Palindrome Permutation II</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@September 18, 2021 11:28 PM</time></td><td class="cell-#N]j"><time>@September 18, 2021 11:28 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-palindrome-permutation-ii-4edd53b83ecd4c8d94f22e482bcd4fb2">https://leetcode.com/problems/palindrome-permutation-ii/</a></td><td class="cell-inCE"></td></tr><tr id="f5b5a3f6-ae46-4449-9b75-49ba2f18c33d"><td class="cell-S*Id">1522. Diameter of N-Ary Tree</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@September 19, 2021 9:06 PM</time></td><td class="cell-#N]j"><time>@September 19, 2021 9:06 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-diameter-of-n-ary-tree-f5b5a3f6ae4644499b7549ba2f18c33d">https://leetcode.com/problems/diameter-of-n-ary-tree/</a></td><td class="cell-inCE"></td></tr><tr id="dff5ddf0-cbf8-4000-9b70-3ac5f854d9f3"><td class="cell-S*Id">515. Find Largest Value in Each Tree Row</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-green">BFS</span></td><td class="cell-J1k`"><time>@September 19, 2021 9:22 PM</time></td><td class="cell-#N]j"><time>@September 19, 2021 9:22 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-find-largest-value-in-each-tree-row-dff5ddf0cbf840009b703ac5f854d9f3">https://leetcode.com/problems/find-largest-value-in-each-tree-row/</a></td><td class="cell-inCE"></td></tr><tr id="786e9535-034a-4134-8dd1-56fe17876089"><td class="cell-S*Id">1554. Strings Differ by One Character</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">String</span></td><td class="cell-J1k`"><time>@September 19, 2021 9:22 PM</time></td><td class="cell-#N]j"><time>@September 20, 2021 1:46 AM</time></td><td class="cell-iF=x"><code>O(MN), O(MN)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-strings-differ-by-one-character-submissions-786e9535034a41348dd156fe17876089">https://leetcode.com/problems/strings-differ-by-one-character/submissions/</a></td><td class="cell-inCE"></td></tr><tr id="4c3664a3-9a2a-4865-8fbd-0d9aa51729a0"><td class="cell-S*Id">339. Nested List Weight Sum</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">Stack</span></td><td class="cell-J1k`"><time>@September 20, 2021 1:45 AM</time></td><td class="cell-#N]j"><time>@September 20, 2021 1:45 AM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/339-Nested-List-Weight-Sum-4c3664a39a2a48658fbd0d9aa51729a0">339. Nested List Weight Sum</a></td><td class="cell-inCE"></td></tr><tr id="194c714c-7352-4926-9729-c3a5786a0f8d"><td class="cell-S*Id">695. Max Area of Island</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@September 20, 2021 1:46 AM</time></td><td class="cell-#N]j"><time>@September 20, 2021 3:17 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-max-area-of-island-194c714c735249269729c3a5786a0f8d">https://leetcode.com/problems/max-area-of-island/</a></td><td class="cell-inCE"></td></tr><tr id="0e24e767-eeda-4009-9b80-7a588d8af7ae"><td class="cell-S*Id">133. Clone Graph</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@September 20, 2021 3:17 PM</time></td><td class="cell-#N]j"><time>@September 20, 2021 3:17 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-clone-graph-0e24e767eeda40099b807a588d8af7ae">https://leetcode.com/problems/clone-graph/</a></td><td class="cell-inCE"></td></tr><tr id="02a8836b-4139-4a5c-bbd3-d13694a59b78"><td class="cell-S*Id">548. Split Array with Equal Sum</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">String</span></td><td class="cell-J1k`"><time>@September 23, 2021 9:09 PM</time></td><td class="cell-#N]j"><time>@September 23, 2021 9:09 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-split-array-with-equal-sum-02a8836b41394a5cbbd3d13694a59b78">https://leetcode.com/problems/split-array-with-equal-sum/</a></td><td class="cell-inCE"></td></tr><tr id="d0cb365c-8326-4dfb-8aef-396f73363a94"><td class="cell-S*Id">724. Find Pivot Index</td><td class="cell-Gn{R"><span class="selected-value select-value-color-green">Easy</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">Array</span></td><td class="cell-J1k`"><time>@September 28, 2021 11:29 PM</time></td><td class="cell-#N]j"><time>@September 28, 2021 11:30 PM</time></td><td class="cell-iF=x"><code>O(N), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-find-pivot-index-d0cb365c83264dfb8aef396f73363a94">https://leetcode.com/problems/find-pivot-index/</a></td><td class="cell-inCE"></td></tr><tr id="72015e8f-b2f7-452d-8841-006966690fb9"><td class="cell-S*Id">19. Remove Nth Node From End of List</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-red">Linked List</span></td><td class="cell-J1k`"><time>@September 28, 2021 11:31 PM</time></td><td class="cell-#N]j"><time>@September 28, 2021 11:31 PM</time></td><td class="cell-iF=x"><code>O(N), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-remove-nth-node-from-end-of-list-72015e8fb2f7452d8841006966690fb9">https://leetcode.com/problems/remove-nth-node-from-end-of-list/</a></td><td class="cell-inCE"></td></tr><tr id="dc816e9c-636b-470b-8342-01c4da883005"><td class="cell-S*Id">16. 3Sum Closest</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">Array</span></td><td class="cell-J1k`"><time>@September 28, 2021 11:36 PM</time></td><td class="cell-#N]j"><time>@September 29, 2021 8:28 PM</time></td><td class="cell-iF=x"><code>O(NlogN), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-3sum-closest-dc816e9c636b470b834201c4da883005">https://leetcode.com/problems/3sum-closest/</a></td><td class="cell-inCE"></td></tr><tr id="8bf1a1ee-52de-4c08-8e1e-4bd22aa591c0"><td class="cell-S*Id">310. Minimum Height Trees</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span><span class="selected-value select-value-color-gray">Topological sorting</span></td><td class="cell-J1k`"><time>@September 29, 2021 9:33 PM</time></td><td class="cell-#N]j"><time>@September 29, 2021 9:34 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-minimum-height-trees-solution-8bf1a1ee52de4c088e1e4bd22aa591c0">https://leetcode.com/problems/minimum-height-trees/solution/</a></td><td class="cell-inCE"></td></tr><tr id="b3c407b9-13a3-4205-b9e8-7486e8b18625"><td class="cell-S*Id">93. Restore IP Addresses</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@September 29, 2021 9:34 PM</time></td><td class="cell-#N]j"><time>@September 29, 2021 9:35 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-restore-ip-addresses-b3c407b913a34205b9e87486e8b18625">https://leetcode.com/problems/restore-ip-addresses/</a></td><td class="cell-inCE"></td></tr><tr id="95fbc981-a480-46ad-9db3-64346fcb8376"><td class="cell-S*Id">40. Combination Sum II</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@September 29, 2021 10:14 PM</time></td><td class="cell-#N]j"><time>@September 29, 2021 10:14 PM</time></td><td class="cell-iF=x"><code>O(2^N), O(2^N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-combination-sum-ii-95fbc981a48046ad9db364346fcb8376">https://leetcode.com/problems/combination-sum-ii/</a></td><td class="cell-inCE"></td></tr><tr id="7561a87c-0129-49a9-8284-df49004f0a7a"><td class="cell-S*Id">616. Add Bold Tag in String</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">String</span></td><td class="cell-J1k`"><time>@October 5, 2021 10:55 PM</time></td><td class="cell-#N]j"><time>@October 5, 2021 10:56 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-add-bold-tag-in-string-7561a87c012949a98284df49004f0a7a">https://leetcode.com/problems/add-bold-tag-in-string/</a></td><td class="cell-inCE"></td></tr><tr id="b46d87f8-6999-406b-a8b9-46aecdc48615"><td class="cell-S*Id">763. Partition Labels</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">String</span></td><td class="cell-J1k`"><time>@October 7, 2021 12:48 AM</time></td><td class="cell-#N]j"><time>@October 7, 2021 1:27 AM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-partition-labels-b46d87f86999406ba8b946aecdc48615">https://leetcode.com/problems/partition-labels/</a></td><td class="cell-inCE"></td></tr><tr id="4126dc03-b7e6-42bc-ab6c-51e313782cb7"><td class="cell-S*Id">1038. Binary Search Tree to Greater Sum Tree</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@October 7, 2021 1:26 AM</time></td><td class="cell-#N]j"><time>@October 7, 2021 1:27 AM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-binary-search-tree-to-greater-sum-tree-4126dc03b7e642bcab6c51e313782cb7">https://leetcode.com/problems/binary-search-tree-to-greater-sum-tree/</a></td><td class="cell-inCE"></td></tr><tr id="56bdd080-06ec-4f3e-8457-6a7c49840627"><td class="cell-S*Id">443. String Compression</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-blue">String</span></td><td class="cell-J1k`"><time>@October 7, 2021 1:26 AM</time></td><td class="cell-#N]j"><time>@October 8, 2021 9:14 PM</time></td><td class="cell-iF=x"><code>O(N), O(1)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-string-compression-56bdd08006ec4f3e84576a7c49840627">https://leetcode.com/problems/string-compression/</a></td><td class="cell-inCE"></td></tr><tr id="f9cc5e89-8753-403d-9332-d8c4d6ae8128"><td class="cell-S*Id">297. Serialize and Deserialize Binary Tree</td><td class="cell-Gn{R"><span class="selected-value select-value-color-red">Hard</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-default">Design</span></td><td class="cell-J1k`"><time>@October 8, 2021 11:42 PM</time></td><td class="cell-#N]j"><time>@October 8, 2021 11:42 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-off"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-serialize-and-deserialize-binary-tree-f9cc5e898753403d9332d8c4d6ae8128">https://leetcode.com/problems/serialize-and-deserialize-binary-tree/</a></td><td class="cell-inCE"></td></tr><tr id="75e30c7d-1b92-43ef-9d59-a515f8d088c8"><td class="cell-S*Id">865. Smallest Subtree with all the Deepest Nodes</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-orange">DFS</span></td><td class="cell-J1k`"><time>@October 9, 2021 3:20 AM</time></td><td class="cell-#N]j"><time>@October 10, 2021 9:48 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-smallest-subtree-with-all-the-deepest-nodes-75e30c7d1b9243ef9d59a515f8d088c8">https://leetcode.com/problems/smallest-subtree-with-all-the-deepest-nodes/</a></td><td class="cell-inCE"></td></tr><tr id="4a84b6d0-0b46-42de-bcad-9f5722a63ed3"><td class="cell-S*Id">286. Walls and Gates</td><td class="cell-Gn{R"><span class="selected-value select-value-color-yellow">Medium</span></td><td class="cell-&gt;`&amp;x"><span class="selected-value select-value-color-green">BFS</span></td><td class="cell-J1k`"><time>@October 10, 2021 9:47 PM</time></td><td class="cell-#N]j"><time>@October 10, 2021 9:48 PM</time></td><td class="cell-iF=x"><code>O(N), O(N)</code></td><td class="cell-`hol"><div class="checkbox checkbox-on"></div></td><td class="cell-title"><a href="https://www.notion.so/https-leetcode-com-problems-walls-and-gates-4a84b6d00b4642debcad9f5722a63ed3">https://leetcode.com/problems/walls-and-gates/</a></td><td class="cell-inCE"></td></tr><tr id="a1c1ec58-d652-4e86-abe1-04f7dac5784a"><td class="cell-S*Id"></td><td class="cell-Gn{R"></td><td class="cell-&gt;`&amp;x"></td><td class="cell-J1k`"><time>@October 10, 2021 9:47 PM</time></td><td class="cell-#N]j"><time>@October 10, 2021 9:47 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-off"></div></td><td class="cell-title"><a href="https://www.notion.so/a1c1ec58d6524e86abe104f7dac5784a">Untitled</a></td><td class="cell-inCE"></td></tr><tr id="762e4e4a-735c-48c7-ac54-97d3203e0ba3"><td class="cell-S*Id"></td><td class="cell-Gn{R"></td><td class="cell-&gt;`&amp;x"></td><td class="cell-J1k`"><time>@September 1, 2021 3:53 PM</time></td><td class="cell-#N]j"><time>@September 1, 2021 3:53 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-off"></div></td><td class="cell-title"><a href="https://www.notion.so/LeetCode-Solution-762e4e4a735c48c7ac5497d3203e0ba3"><span class="icon">📄</span>LeetCode Solution</a></td><td class="cell-inCE"></td></tr><tr id="a3366531-9cf6-420b-ab6d-e3561ed83bdd"><td class="cell-S*Id"></td><td class="cell-Gn{R"></td><td class="cell-&gt;`&amp;x"></td><td class="cell-J1k`"><time>@September 1, 2021 3:53 PM</time></td><td class="cell-#N]j"><time>@September 1, 2021 3:53 PM</time></td><td class="cell-iF=x"></td><td class="cell-`hol"><div class="checkbox checkbox-off"></div></td><td class="cell-title"><a href="https://www.notion.so/LeetCode-Solution-Web-a33665319cf6420bab6de3561ed83bdd"><span class="icon">📃</span>LeetCode Solution Web</a></td><td class="cell-inCE"></td></tr></tbody></table></div></article></body></html>
